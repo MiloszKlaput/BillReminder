@@ -6,6 +6,9 @@ import { BoardComponent } from './components/board/board.component';
   declarations: [BoardComponent],
   imports: [
     CommonModule
+  ],
+  exports: [
+    BoardComponent
   ]
 })
 export class MainModule { }
