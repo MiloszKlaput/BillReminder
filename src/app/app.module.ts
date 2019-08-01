@@ -5,11 +5,13 @@ import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { NavbarComponent } from './shared-components/navbar/navbar.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +23,6 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 export class AppModule { 
 
   constructor() {
-    library.add(faCoffee);
-    
+    library.add(faCoffee);    
   }
 }
