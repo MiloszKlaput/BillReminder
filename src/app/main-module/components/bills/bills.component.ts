@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Bill } from '../../model/bill.model';
+import { BillsService } from '../../services/bills.service';
 
 @Component({
   selector: 'app-bills',
@@ -9,119 +10,21 @@ import { Bill } from '../../model/bill.model';
 export class BillsComponent implements OnInit {
   bills: Bill[];
 
-  constructor() { }
+  constructor(private billsService: BillsService) { }
 
   ngOnInit() {
-    this.bills = [
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'Play',
-        amount: 25,
-        deadlineDate: new Date(),
-        isPaid: true,
-      },
-      {
-        companyName: 'Rent',
-        amount: 450,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'Play',
-        amount: 25,
-        deadlineDate: new Date(),
-        isPaid: true,
-      },
-      {
-        companyName: 'Rent',
-        amount: 450,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'Play',
-        amount: 25,
-        deadlineDate: new Date(),
-        isPaid: true,
-      },
-      {
-        companyName: 'Rent',
-        amount: 450,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'Play',
-        amount: 25,
-        deadlineDate: new Date(),
-        isPaid: true,
-      },
-      {
-        companyName: 'Rent',
-        amount: 450,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'Play',
-        amount: 25,
-        deadlineDate: new Date(),
-        isPaid: true,
-      },
-      {
-        companyName: 'Rent',
-        amount: 450,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-      {
-        companyName: 'Play',
-        amount: 25,
-        deadlineDate: new Date(),
-        isPaid: true,
-      },
-      {
-        companyName: 'Rent',
-        amount: 450,
-        deadlineDate: new Date(),
-        isPaid: false,
-      },
-    ];
+    this.getBills();
+    this.checkIfExpired(this.bills);
   }
 
+  checkIfExpired(bills: Bill[]): void {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    bills.forEach(bill => bill.isExpired = yesterday > bill.deadlineDate ? true : false);
+  }
+
+  getBills(): void {
+    this.billsService.getBills().subscribe(bills => this.bills = bills);
+  }
 }

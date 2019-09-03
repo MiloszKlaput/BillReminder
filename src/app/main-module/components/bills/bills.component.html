@@ -1,10 +1,14 @@
 <div class="my-5 d-flex flex-wrap">
   <div *ngFor="let bill of bills" class="card m-2">
-    <div class="card-header bg-success text-white">{{ bill.companyName }}</div>
+    <div
+      [ngClass]="{'bg-success': bill.isPaid, 'bg-warning': !bill.isPaid, 'bg-danger': !bill.isPaid && bill.isExpired}"
+      class="card-header text-white">
+      {{ bill.companyName }}
+    </div>
     <div class="card-body">
       <ul class="list-group list-group-flush">
+        <li [ngClass]="{'text-danger': !bill.isPaid && bill.isExpired}" class="list-group-item">Deadline: {{ bill.deadlineDate | date: 'dd-MM-yyyy'}}</li>
         <li class="list-group-item">{{ bill.amount | number: '.2-2'}} zł</li>
-        <li class="list-group-item">Deadline: {{ bill.deadlineDate | date: 'dd-MM-yyyy'}}</li>
       </ul>
     </div>
   </div>

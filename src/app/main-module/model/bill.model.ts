@@ -3,4 +3,5 @@ export interface Bill {
   amount: number;
   deadlineDate: Date;
   isPaid: boolean;
+  isExpired?: boolean;
 }
