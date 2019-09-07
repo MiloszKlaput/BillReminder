@@ -1,13 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MainModule } from './main-module/main.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { NavbarComponent } from './shared-components/navbar/navbar.component';
 import { FooterComponent } from './shared-components/footer/footer.component';
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { FooterComponent } from './shared-components/footer/footer.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FontAwesomeModule,
     MainModule
   ],
@@ -26,6 +28,6 @@ import { FooterComponent } from './shared-components/footer/footer.component';
 export class AppModule { 
 
   constructor() {
-    library.add(faCoffee);    
+    // library.add(faCoffee);
   }
 }
