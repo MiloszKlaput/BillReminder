@@ -1,7 +1,8 @@
 export interface Bill {
+  id: number;
   companyName: string;
-  amount: number;
   deadlineDate: Date;
+  amount: number;
   isPaid: boolean;
-  isExpired?: boolean;
+  isExpired: boolean;
 }

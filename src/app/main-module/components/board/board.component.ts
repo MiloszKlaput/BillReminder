@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
+  isNewBillForm = false;
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  activateNewBillForm() {
+    this.isNewBillForm = true;
+  }
+
+  closeNewBillForm() {
+    this.isNewBillForm = false;
+  }
 }

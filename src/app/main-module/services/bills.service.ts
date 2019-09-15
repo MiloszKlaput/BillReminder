@@ -7,98 +7,44 @@ import { Observable, of } from 'rxjs';
 })
 export class BillsService {
   bills: Bill[];
-  dates: Date[] = [];
 
-  constructor() {
-    this.bills = [
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(2019, 8, 15),
-        isPaid: false,
-      },
-      {
-        companyName: 'Play',
-        amount: 25,
-        deadlineDate: new Date(2019, 8, 31),
-        isPaid: false,
-      },
-      {
-        companyName: 'Rent',
-        amount: 450,
-        deadlineDate: new Date(2019, 7, 15),
-        isPaid: false,
-      },
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(2019, 7, 9),
-        isPaid: false,
-      },
-      {
-        companyName: 'Play',
-        amount: 25,
-        deadlineDate: new Date(2019, 9, 15),
-        isPaid: true,
-      },
-      {
-        companyName: 'Rent',
-        amount: 450,
-        deadlineDate: new Date(2019, 9, 3),
-        isPaid: true,
-      },
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(2019, 8, 2),
-        isPaid: true,
-      },
-      {
-        companyName: 'Play',
-        amount: 25,
-        deadlineDate: new Date(2019, 8, 1),
-        isPaid: true,
-      },
-      {
-        companyName: 'Rent',
-        amount: 450,
-        deadlineDate: new Date(2019, 8, 22),
-        isPaid: true,
-      },
-      {
-        companyName: 'UPC',
-        amount: 100,
-        deadlineDate: new Date(2019, 7, 1),
-        isPaid: true,
-      }
-    ];
-
-    this.sortBillsByDate(this.bills);
-    this.getDatesFromBills(this.bills);
-  }
+  constructor() { }
 
   getBills(): Observable<Bill[]> {
-    return of(this.bills);
+    if (localStorage.getItem('bills') === null) {
+      this.bills = [];
+    } else {
+      this.bills = JSON.parse(localStorage.getItem('bills'));
+    }
+
+    return of(this.bills.sort((a, b) => {
+      return new Date(a.deadlineDate).getTime() - new Date(b.deadlineDate).getTime();
+    }));
   }
 
-  getDates(): Observable<Date[]> {
-    return of(this.dates);
+  addBill(bill: Bill) {
+    this.bills.unshift(bill);
+    localStorage.setItem('bills', JSON.stringify(this.bills));
   }
 
-  private sortBillsByDate(bills: Bill[]): Bill[] {
-    const sortedBills = bills.sort((a, b) => {
-      const timeA = a.deadlineDate.getTime();
-      const timeB = b.deadlineDate.getTime();
+  // updateBill(bill: Bill) {
+  //   this.bills.forEach((current, index) => {
+  //     if (bill.id === current.id) {
+  //       this.bills.splice(index, 1);
+  //     }
+  //   });
+  //   this.bills.unshift(bill);
 
-      return timeA - timeB;
-    });
+  //   localStorage.setItem('bills', JSON.stringify(this.bills));
+  // }
 
-    return sortedBills;
-  }
+  // deleteBill(bill: Bill) {
+  //   this.bills.forEach((current, index) => {
+  //     if (bill.id === current.id) {
+  //       this.bills.splice(index, 1);
+  //     }
+  //   });
 
-  private getDatesFromBills(bills: Bill[]) {
-    bills.forEach(bill => {
-      this.dates.push(bill.deadlineDate);
-    });
-  }
+  //   localStorage.setItem('bills', JSON.stringify(this.bills));
+  // }
 }

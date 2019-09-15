@@ -13,18 +13,14 @@ export class BillsComponent implements OnInit {
   constructor(private billsService: BillsService) { }
 
   ngOnInit() {
-    this.getBills();
-    this.checkIfExpired(this.bills);
+    this.billsService.getBills().subscribe(bills => this.bills = bills);
+    this.checkIfExpired();
   }
 
-  checkIfExpired(bills: Bill[]): void {
+  checkIfExpired(): void {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
-    bills.forEach(bill => bill.isExpired = yesterday > bill.deadlineDate ? true : false);
-  }
-
-  getBills(): void {
-    this.billsService.getBills().subscribe(bills => this.bills = bills);
+    this.bills.forEach((bill, index, arr) => arr[index].isExpired = bill.isExpired = yesterday > bill.deadlineDate ? true : false);
   }
 }

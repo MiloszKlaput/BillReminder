@@ -1,5 +1,5 @@
 <div class="my-5 d-flex flex-wrap">
-  <div *ngFor="let bill of bills" class="card mx-1 mb-3">
+  <div *ngFor="let bill of bills" class="card mx-1 mb-3 bill">
     <div
       [ngClass]="{'bg-success': bill.isPaid, 'bg-warning': !bill.isPaid, 'bg-danger': !bill.isPaid && bill.isExpired}"
       class="card-header text-white">
