@@ -15,6 +15,7 @@ export class BillsService {
       this.bills = [];
     } else {
       this.bills = JSON.parse(localStorage.getItem('bills'));
+      this.checkIfExpired();
     }
 
     return of(this.bills.sort((a, b) => {
@@ -23,28 +24,37 @@ export class BillsService {
   }
 
   addBill(bill: Bill) {
-    this.bills.unshift(bill);
+    this.bills.push(bill);
     localStorage.setItem('bills', JSON.stringify(this.bills));
   }
 
-  // updateBill(bill: Bill) {
-  //   this.bills.forEach((current, index) => {
-  //     if (bill.id === current.id) {
-  //       this.bills.splice(index, 1);
-  //     }
-  //   });
-  //   this.bills.unshift(bill);
+  updateBill(bill: Bill) {
+    this.bills.forEach((current, index) => {
+      if (bill.id === current.id) {
+        this.bills.splice(index, 1);
+      }
+    });
+    this.bills.unshift(bill);
 
-  //   localStorage.setItem('bills', JSON.stringify(this.bills));
-  // }
+    localStorage.setItem('bills', JSON.stringify(this.bills));
+  }
 
-  // deleteBill(bill: Bill) {
-  //   this.bills.forEach((current, index) => {
-  //     if (bill.id === current.id) {
-  //       this.bills.splice(index, 1);
-  //     }
-  //   });
+  deleteBill(bill: Bill) {
+    this.bills.forEach((current, index) => {
+      if (bill.id === current.id) {
+        this.bills.splice(index, 1);
+      }
+    });
 
-  //   localStorage.setItem('bills', JSON.stringify(this.bills));
-  // }
+    localStorage.setItem('bills', JSON.stringify(this.bills));
+  }
+
+  checkIfExpired(): void {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    this.bills.forEach(bill => bill.isExpired = new Date(bill.deadlineDate).getTime() < yesterday.getTime() ? true : false);
+
+    localStorage.setItem('bills', JSON.stringify(this.bills));
+  }
 }

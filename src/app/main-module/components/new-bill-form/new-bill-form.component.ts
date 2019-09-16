@@ -20,11 +20,12 @@ export class NewBillFormComponent implements OnInit {
   bills: Bill[];
   isSubmitEnabled = true;
 
-  constructor(private billsService: BillsService) {
-    this.billsService.getBills().subscribe(bills => this.bills = bills);
-  }
+  constructor(private billsService: BillsService) { }
 
   ngOnInit() {
+    this.billsService.getBills().subscribe(bills => {
+      this.bills = bills;
+    });
   }
 
   onSubmit() {
@@ -38,10 +39,11 @@ export class NewBillFormComponent implements OnInit {
   }
 
   generateId(): number {
+    console.log(this.bills.length);
     if (this.bills.length === 0) {
       return 1;
     } else {
-      return this.bills[length].id + 1;
+      return this.bills.length + 1;
     }
   }
 }
