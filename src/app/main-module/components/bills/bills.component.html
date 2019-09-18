@@ -1,4 +1,4 @@
-<div class="my-5 d-flex flex-wrap">
+<div class="d-flex flex-wrap mt-5">
   <div *ngFor="let bill of bills" class="card mx-1 mb-3 bill">
     <div
       [ngClass]="{'bg-success': bill.isPaid, 'bg-warning': !bill.isPaid, 'bg-danger': !bill.isPaid && bill.isExpired}"
@@ -12,4 +12,5 @@
       </ul>
     </div>
   </div>
+  <app-add-new-bill></app-add-new-bill>
 </div>

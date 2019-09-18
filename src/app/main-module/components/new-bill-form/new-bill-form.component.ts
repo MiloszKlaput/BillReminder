@@ -9,6 +9,7 @@ import { BillsService } from '../../services/bills.service';
 })
 export class NewBillFormComponent implements OnInit {
   @Output() newBillFormClosed: EventEmitter<any> = new EventEmitter<any>();
+
   bill: Bill = {
     id: 0,
     companyName: '',
