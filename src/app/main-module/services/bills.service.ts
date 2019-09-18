@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Bill } from '../model/bill.model';
-import { Observable, of } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BillsService {
   bills: Bill[];
+  private billsSubject$: BehaviorSubject<Bill[]> = new BehaviorSubject<Bill[]>([]);
 
   constructor() { }
 
@@ -16,15 +17,20 @@ export class BillsService {
     } else {
       this.bills = JSON.parse(localStorage.getItem('bills'));
       this.checkIfExpired();
+      this.sortByDate();
     }
 
-    return of(this.bills.sort((a, b) => {
-      return new Date(a.deadlineDate).getTime() - new Date(b.deadlineDate).getTime();
-    }));
+    this.billsSubject$.next(this.bills);
+
+    return this.billsSubject$.asObservable();
   }
 
   addBill(bill: Bill) {
     this.bills.push(bill);
+    this.checkIfExpired();
+    this.sortByDate();
+
+    this.billsSubject$.next(this.bills);
     localStorage.setItem('bills', JSON.stringify(this.bills));
   }
 
@@ -56,5 +62,9 @@ export class BillsService {
     this.bills.forEach(bill => bill.isExpired = new Date(bill.deadlineDate).getTime() < yesterday.getTime() ? true : false);
 
     localStorage.setItem('bills', JSON.stringify(this.bills));
+  }
+
+  sortByDate(): void {
+    this.bills.sort((a, b) => (new Date(a.deadlineDate).getTime() - new Date(b.deadlineDate).getTime()));
   }
 }

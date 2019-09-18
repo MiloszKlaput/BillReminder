@@ -39,7 +39,6 @@ export class NewBillFormComponent implements OnInit {
   }
 
   generateId(): number {
-    console.log(this.bills.length);
     if (this.bills.length === 0) {
       return 1;
     } else {
