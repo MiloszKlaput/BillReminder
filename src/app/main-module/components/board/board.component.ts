@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BillsEventsHandlerService } from '../../services/bills-events-handler.service';
 
 @Component({
   selector: 'app-board',
@@ -6,18 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  isNewBillForm = false;
+  isNewBillFormOpen: boolean;
 
-  constructor() { }
+  constructor(private billsEventsHandlerService: BillsEventsHandlerService) { }
 
   ngOnInit() {
-  }
-
-  activateNewBillForm() {
-    this.isNewBillForm = true;
+    this.billsEventsHandlerService.isNewBillFormOpen.subscribe(state => {
+      this.isNewBillFormOpen = state;
+    });
   }
 
   closeNewBillForm() {
-    this.isNewBillForm = false;
+
   }
 }

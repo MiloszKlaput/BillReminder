@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BillsEventsHandlerService } from '../../services/bills-events-handler.service';
 
 @Component({
   selector: 'app-add-new-bill',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddNewBillComponent implements OnInit {
 
-  constructor() { }
+  constructor(private billsEventsHandlerService: BillsEventsHandlerService) { }
 
   ngOnInit() {
   }
 
+  openNewBillForm() {
+    this.billsEventsHandlerService.openNewBillForm();
+  }
 }

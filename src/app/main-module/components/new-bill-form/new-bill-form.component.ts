@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Bill } from '../../model/bill.model';
 import { BillsService } from '../../services/bills.service';
+import { BillsEventsHandlerService } from '../../services/bills-events-handler.service';
 
 @Component({
   selector: 'app-new-bill-form',
@@ -8,7 +9,6 @@ import { BillsService } from '../../services/bills.service';
   styleUrls: ['./new-bill-form.component.scss']
 })
 export class NewBillFormComponent implements OnInit {
-  @Output() newBillFormClosed: EventEmitter<any> = new EventEmitter<any>();
 
   bill: Bill = {
     id: 0,
@@ -21,7 +21,10 @@ export class NewBillFormComponent implements OnInit {
   bills: Bill[];
   isSubmitEnabled = true;
 
-  constructor(private billsService: BillsService) { }
+  constructor(
+    private billsService: BillsService,
+    private billsEventsHandlerService: BillsEventsHandlerService
+    ) { }
 
   ngOnInit() {
     this.billsService.getBills().subscribe(bills => {
@@ -32,11 +35,10 @@ export class NewBillFormComponent implements OnInit {
   onSubmit() {
     this.bill.id = this.generateId();
     this.billsService.addBill(this.bill);
-    this.newBillFormClosed.emit();
   }
 
   closeNewBillForm() {
-    this.newBillFormClosed.emit();
+    this.billsEventsHandlerService.closeNewBillForm();
   }
 
   generateId(): number {

@@ -4,7 +4,7 @@
       <app-bills></app-bills>
     </div>
     <div class="col-md-4">
-      <app-new-bill-form *ngIf="isNewBillForm" (newBillFormClosed)="closeNewBillForm()"></app-new-bill-form>
+      <app-new-bill-form *ngIf="isNewBillFormOpen"></app-new-bill-form>
     </div>
   </div>
 </div>

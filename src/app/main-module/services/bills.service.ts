@@ -55,7 +55,7 @@ export class BillsService {
     localStorage.setItem('bills', JSON.stringify(this.bills));
   }
 
-  checkIfExpired(): void {
+  private checkIfExpired(): void {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
@@ -64,7 +64,7 @@ export class BillsService {
     localStorage.setItem('bills', JSON.stringify(this.bills));
   }
 
-  sortByDate(): void {
+  private sortByDate(): void {
     this.bills.sort((a, b) => (new Date(a.deadlineDate).getTime() - new Date(b.deadlineDate).getTime()));
   }
 }
