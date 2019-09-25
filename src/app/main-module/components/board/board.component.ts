@@ -16,8 +16,4 @@ export class BoardComponent implements OnInit {
       this.isNewBillFormOpen = state;
     });
   }
-
-  closeNewBillForm() {
-
-  }
 }
