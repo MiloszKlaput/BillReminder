@@ -1,9 +1,9 @@
 <div class="card my-3">
   <div class="card-header bg-info">
-    Add Bill
+    Edit Bill
   </div>
   <div class="card-body">
-    <form (submit)="onNewBillFormSubmit()">
+    <form (submit)="onEditBillFormSubmit()">
       <div class="form-group">
         <label for="companyName">Company name</label>
         <input [(ngModel)]="bill.companyName" type="text" class="form-control" id="companyName" placeholder="Enter company name..." name="companyName" required>
@@ -16,8 +16,9 @@
         <label for="billAmount">Bill amount</label>
         <input [(ngModel)]="bill.amount" type="number" class="form-control" id="billAmount" placeholder="Enter bill amount..." name="billAmount" required>
       </div>
-      <button type="submit" class="btn btn-success btn-block" [disabled]="!isSubmitEnabled">Add Bill</button>
-      <button (click)="closeNewBillForm()" class="btn btn-secondary btn-block">Cancel</button>
+      <button (click)="onEditBillFormSubmit()" type="submit" class="btn btn-success btn-block" [disabled]="!isSubmitEnabled">Save</button>
+      <button (click)="onDeleteBill()" class="btn btn-danger btn-block">Delete</button>
+      <button (click)="closeEditBillForm()" class="btn btn-secondary btn-block">Cancel</button>
     </form>
   </div>
 </div>

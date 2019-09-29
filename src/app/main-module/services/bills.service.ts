@@ -41,6 +41,8 @@ export class BillsService {
       }
     });
     this.bills.unshift(bill);
+    this.checkIfExpired();
+    this.sortByDate();
 
     localStorage.setItem('bills', JSON.stringify(this.bills));
   }

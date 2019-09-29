@@ -32,9 +32,10 @@ export class NewBillFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onNewBillFormSubmit() {
     this.bill.id = this.generateId();
     this.billsService.addBill(this.bill);
+    this.closeNewBillForm();
   }
 
   closeNewBillForm() {

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NewBillFormComponent } from './components/new-bill-form/new-bill-form.component';
 import { AddNewBillComponent } from './components/add-new-bill/add-new-bill.component';
+import { EditBillFormComponent } from './components/edit-bill-form/edit-bill-form.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { AddNewBillComponent } from './components/add-new-bill/add-new-bill.comp
     BillsComponent,
     NewBillFormComponent,
     AddNewBillComponent,
+    EditBillFormComponent,
   ],
   imports: [
     CommonModule,
