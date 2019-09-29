@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NewBillFormComponent } from './components/new-bill-form/new-bill-form.component';
 import { AddNewBillComponent } from './components/add-new-bill/add-new-bill.component';
 import { EditBillFormComponent } from './components/edit-bill-form/edit-bill-form.component';
+import { HeaderBillsStatusComponent } from './components/header-bills-status/header-bills-status.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { EditBillFormComponent } from './components/edit-bill-form/edit-bill-for
     NewBillFormComponent,
     AddNewBillComponent,
     EditBillFormComponent,
+    HeaderBillsStatusComponent,
   ],
   imports: [
     CommonModule,
