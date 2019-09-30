@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { Bill } from '../model/bill.model';
 import { BehaviorSubject } from 'rxjs';
 
+export enum BillsStatus {
+  noBills = 0,
+  billsPaid = 1,
+  billsUnpaidDeadlineNotCrossed = 2,
+  billsUnpaidDeadlineCrossed = 3
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,6 +16,8 @@ export class BillsService {
   bills: Bill[];
   private billsSource: BehaviorSubject<Bill[]> = new BehaviorSubject<Bill[]>([]);
   currentBills$ = this.billsSource.asObservable();
+  private billsStatusSource: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  billsStatus$ = this.billsStatusSource.asObservable();
   isFirstDownload = true;
 
   constructor() { }
@@ -21,12 +30,14 @@ export class BillsService {
       this.bills = JSON.parse(localStorage.getItem('bills'));
       this.checkIfExpired();
       this.sortByDate();
+      this.setBillsStatus();
       this.billsSource.next(this.bills);
       this.isFirstDownload = false;
 
     } else {
       this.checkIfExpired();
       this.sortByDate();
+      this.setBillsStatus();
       this.billsSource.next(this.bills);
     }
   }
@@ -71,5 +82,23 @@ export class BillsService {
 
   private sortByDate(): void {
     this.bills.sort((a, b) => (new Date(a.deadlineDate).getTime() - new Date(b.deadlineDate).getTime()));
+  }
+
+  private setBillsStatus() {
+    console.log('test');
+    if (this.bills.length === 0) {
+      this.billsStatusSource.next(BillsStatus.noBills);
+    } else {
+      for (const bill of this.bills) {
+        if (bill.isExpired && !bill.isPaid) {
+          this.billsStatusSource.next(BillsStatus.billsUnpaidDeadlineCrossed);
+          return;
+        } else if (!bill.isExpired && !bill.isPaid) {
+          this.billsStatusSource.next(BillsStatus.billsUnpaidDeadlineNotCrossed);
+        } else {
+          this.billsStatusSource.next(BillsStatus.billsPaid);
+        }
+      }
+    }
   }
 }

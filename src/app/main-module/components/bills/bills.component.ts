@@ -17,7 +17,6 @@ export class BillsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.billsService.getBills();
     this.billsService.currentBills$.subscribe(bills => {
       this.bills = bills;
     });

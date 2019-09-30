@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BillsEventsHandlerService } from '../../services/bills-events-handler.service';
+import { BillsService } from '../../services/bills.service';
 
 @Component({
   selector: 'app-board',
@@ -10,9 +11,13 @@ export class BoardComponent implements OnInit {
   isNewBillFormOpen: boolean;
   isEditBillFormOpen: boolean;
 
-  constructor(private billsEventsHandlerService: BillsEventsHandlerService) { }
+  constructor(
+    private billsService: BillsService,
+    private billsEventsHandlerService: BillsEventsHandlerService
+    ) { }
 
   ngOnInit() {
+    this.billsService.getBills();
     this.billsEventsHandlerService.isNewBillFormOpen.subscribe(state => {
       this.isNewBillFormOpen = state;
     });

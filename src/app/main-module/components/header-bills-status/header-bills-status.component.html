@@ -1,6 +1,14 @@
-<div 
-  class="alert my-2" 
-  [ngClass]="{'alert-info': billsStatus === 0, 'alert-success': billsStatus === 1, 'alert-warning': billsStatus === 2,  'alert-danger': billsStatus === 3}"
-  role="alert">
-  <h5 class="text-center">{{ message }}</h5>
+<div [ngSwitch]="billsStatus">
+  <div *ngSwitchCase="0" class="alert my-2 alert-info">
+    <h5 class="text-center">{{ message[0] }}</h5>
+  </div>
+  <div *ngSwitchCase="1" class="alert my-2 alert-success">
+    <h5 class="text-center">{{ message[1] }}</h5>
+  </div>
+  <div *ngSwitchCase="2" class="alert my-2 alert-warning">
+    <h5 class="text-center">{{ message[2] }}</h5>
+  </div>
+  <div *ngSwitchCase="3" class="alert my-2 alert-danger">
+    <h5 class="text-center">{{ message[2] }}</h5>
+  </div>
 </div>
