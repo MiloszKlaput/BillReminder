@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Bill } from '../../model/bill.model';
 import { BillsService } from '../../services/bills.service';
 
+enum BillsStatus {
+  noBills = 0,
+  billsPaid = 1,
+  billsUnpaidDeadlineNotCrossed = 2,
+  billsUnpaidDeadlineCrossed = 3
+}
+
 @Component({
   selector: 'app-header-bills-status',
   templateUrl: './header-bills-status.component.html',
@@ -10,7 +17,7 @@ import { BillsService } from '../../services/bills.service';
 export class HeaderBillsStatusComponent implements OnInit {
   bills: Bill[];
   message: string;
-  billsPaid: boolean;
+  billsStatus: BillsStatus;
 
   constructor(private billsService: BillsService) { }
 
@@ -18,28 +25,33 @@ export class HeaderBillsStatusComponent implements OnInit {
     this.billsService.getBills().subscribe(bills => {
       this.bills = bills;
     });
-    this.billsPaid = this.setPaidStatus();
+    this.setBillsStatus();
     this.setHeaderMessage();
   }
 
-  setPaidStatus(): boolean {
-    let counter = 0;
+  setBillsStatus() {
+    if (this.bills.length === 0) {
+      this.billsStatus = 0;
+    }
 
-    this.bills.forEach(bill => {
+    for (const bill of this.bills) {
       if (bill.isExpired && !bill.isPaid) {
-        counter++;
+        this.billsStatus = 3;
+        return;
+      } else if (!bill.isExpired && !bill.isPaid) {
+        this.billsStatus = 2;
+      } else {
+        this.billsStatus = 1;
       }
-    });
-
-    return counter > 0 ? false : true;
+    }
   }
 
   setHeaderMessage() {
-    if (this.bills.length === 0) {
+    if (this.billsStatus === 0) {
       this.message = `You don't have any bills. Add one by clicking 'Add new bill' button.`;
-    } else if (this.bills.length !== 0 && this.billsPaid) {
+    } else if (this.billsStatus === 1) {
       this.message = 'Great, You have paid all your bills on time!';
-    } else if (this.bills.length !== 0 && !this.billsPaid) {
+    } else if (this.billsStatus === 2 || this.billsStatus === 3) {
       this.message = 'You have unpaid bills!';
     }
   }

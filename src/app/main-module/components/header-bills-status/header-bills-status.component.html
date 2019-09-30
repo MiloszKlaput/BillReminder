@@ -1,6 +1,6 @@
 <div 
   class="alert my-2" 
-  [ngClass]="{'alert-success': billsPaid && bills.length !== 0, 'alert-info': bills.length === 0, 'alert-danger': !billsPaid && bills.length !==0}"
+  [ngClass]="{'alert-info': billsStatus === 0, 'alert-success': billsStatus === 1, 'alert-warning': billsStatus === 2,  'alert-danger': billsStatus === 3}"
   role="alert">
   <h5 class="text-center">{{ message }}</h5>
 </div>
