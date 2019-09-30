@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Bill } from '../../model/bill.model';
 import { BillsService } from '../../services/bills.service';
 import { BillsEventsHandlerService } from '../../services/bills-events-handler.service';
@@ -27,7 +27,7 @@ export class NewBillFormComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.billsService.getBills().subscribe(bills => {
+    this.billsService.currentBills$.subscribe(bills => {
       this.bills = bills;
     });
   }

@@ -1,37 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Bill } from '../model/bill.model';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BillsService {
   bills: Bill[];
-  private billsSubject$: BehaviorSubject<Bill[]> = new BehaviorSubject<Bill[]>([]);
+  private billsSource: BehaviorSubject<Bill[]> = new BehaviorSubject<Bill[]>([]);
+  currentBills$ = this.billsSource.asObservable();
+  isFirstDownload = true;
 
   constructor() { }
 
-  getBills(): Observable<Bill[]> {
+  getBills() {
     if (localStorage.getItem('bills') === null) {
       this.bills = [];
-    } else {
+
+    } else if (this.isFirstDownload) {
       this.bills = JSON.parse(localStorage.getItem('bills'));
       this.checkIfExpired();
       this.sortByDate();
+      this.billsSource.next(this.bills);
+      this.isFirstDownload = false;
+
+    } else {
+      this.checkIfExpired();
+      this.sortByDate();
+      this.billsSource.next(this.bills);
     }
-
-    this.billsSubject$.next(this.bills);
-
-    return this.billsSubject$.asObservable();
   }
 
   addBill(bill: Bill) {
     this.bills.push(bill);
-    this.checkIfExpired();
-    this.sortByDate();
-
-    this.billsSubject$.next(this.bills);
     localStorage.setItem('bills', JSON.stringify(this.bills));
+    this.getBills();
   }
 
   updateBill(bill: Bill) {
@@ -40,11 +43,10 @@ export class BillsService {
         this.bills.splice(index, 1);
       }
     });
-    this.bills.unshift(bill);
-    this.checkIfExpired();
-    this.sortByDate();
 
+    this.bills.unshift(bill);
     localStorage.setItem('bills', JSON.stringify(this.bills));
+    this.getBills();
   }
 
   deleteBill(bill: Bill) {
@@ -55,6 +57,7 @@ export class BillsService {
     });
 
     localStorage.setItem('bills', JSON.stringify(this.bills));
+    this.getBills();
   }
 
   private checkIfExpired(): void {

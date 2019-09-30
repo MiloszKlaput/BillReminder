@@ -22,7 +22,7 @@ export class HeaderBillsStatusComponent implements OnInit {
   constructor(private billsService: BillsService) { }
 
   ngOnInit() {
-    this.billsService.getBills().subscribe(bills => {
+    this.billsService.currentBills$.subscribe(bills => {
       this.bills = bills;
     });
     this.setBillsStatus();
