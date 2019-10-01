@@ -9,6 +9,7 @@ import { NewBillFormComponent } from './components/new-bill-form/new-bill-form.c
 import { AddNewBillComponent } from './components/add-new-bill/add-new-bill.component';
 import { EditBillFormComponent } from './components/edit-bill-form/edit-bill-form.component';
 import { HeaderBillsStatusComponent } from './components/header-bills-status/header-bills-status.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -17,12 +18,13 @@ import { HeaderBillsStatusComponent } from './components/header-bills-status/hea
     NewBillFormComponent,
     AddNewBillComponent,
     EditBillFormComponent,
-    HeaderBillsStatusComponent,
+    HeaderBillsStatusComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BsDatepickerModule
   ],
   exports: [
     BoardComponent

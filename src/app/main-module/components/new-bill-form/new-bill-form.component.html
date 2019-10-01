@@ -3,20 +3,38 @@
     Add Bill
   </div>
   <div class="card-body">
-    <form (submit)="onNewBillFormSubmit()">
+    <form #newBillForm="ngForm" (submit)="onNewBillFormSubmit()">
       <div class="form-group">
         <label for="companyName">Company name</label>
-        <input [(ngModel)]="bill.companyName" type="text" class="form-control" id="companyName" placeholder="Enter company name..." name="companyName" required>
+        <input [(ngModel)]="bill.companyName" type="text" class="form-control" id="companyName"
+          placeholder="Enter company name..." name="companyName" #companyName="ngModel" required>
+        <div *ngIf="companyName.invalid && (companyName.dirty || companyName.touched)" class="text-danger">
+          <div *ngIf="companyName.errors.required">
+            Company name is required.
+          </div>
+        </div>
       </div>
       <div class="form-group">
         <label for="deadline">Deadline</label>
-        <input [(ngModel)]="bill.deadlineDate" type="date" class="form-control" id="deadline" placeholder="Enter deadline date..." name="deadline" required>
+        <input [(ngModel)]="bill.deadlineDate" type="text" class="form-control" id="deadline"
+          placeholder="Enter deadline date..." name="deadline" bsDatepicker [bsConfig]="bsConfiguration" #deadlineDate="ngModel" required>
+        <div *ngIf="deadlineDate.invalid && (deadlineDate.dirty || deadlineDate.touched)" class="text-danger">
+          <div *ngIf="deadlineDate.errors.required">
+            Deadline date is required.
+          </div>
+        </div>
       </div>
       <div class="form-group">
         <label for="billAmount">Bill amount</label>
-        <input [(ngModel)]="bill.amount" type="number" class="form-control" id="billAmount" placeholder="Enter bill amount..." name="billAmount" required>
+        <input [(ngModel)]="bill.amount" type="number" class="form-control" id="billAmount"
+          placeholder="Enter bill amount..." min="0" name="billAmount" #amount="ngModel" required>
+        <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="text-danger">
+          <div *ngIf="amount.errors.required">
+            Amount is required.
+          </div>
+        </div>
       </div>
-      <button type="submit" class="btn btn-success btn-block" [disabled]="!isSubmitEnabled">Add Bill</button>
+      <button type="submit" class="btn btn-success btn-block" [disabled]="!newBillForm.valid">Add Bill</button>
       <button (click)="closeNewBillForm()" class="btn btn-secondary btn-block">Cancel</button>
     </form>
   </div>

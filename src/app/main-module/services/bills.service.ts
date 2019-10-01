@@ -85,7 +85,6 @@ export class BillsService {
   }
 
   private setBillsStatus() {
-    console.log('test');
     if (this.bills.length === 0) {
       this.billsStatusSource.next(BillsStatus.noBills);
     } else {

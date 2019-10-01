@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Bill } from '../../model/bill.model';
 import { BillsService } from '../../services/bills.service';
 import { BillsEventsHandlerService } from '../../services/bills-events-handler.service';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-new-bill-form',
@@ -11,25 +12,24 @@ import { BillsEventsHandlerService } from '../../services/bills-events-handler.s
 export class NewBillFormComponent implements OnInit {
 
   bill: Bill = {
-    id: 0,
+    id: null,
     companyName: '',
     deadlineDate: null,
-    amount: 0,
+    amount: null,
     isPaid: false,
     isExpired: false
   };
   bills: Bill[];
-  isSubmitEnabled = true;
+  bsConfiguration: Partial<BsDatepickerConfig>;
 
   constructor(
     private billsService: BillsService,
     private billsEventsHandlerService: BillsEventsHandlerService
-    ) { }
+  ) { }
 
   ngOnInit() {
-    this.billsService.currentBills$.subscribe(bills => {
-      this.bills = bills;
-    });
+    this.billsService.currentBills$.subscribe(bills => (this.bills = bills));
+    this.setBsConfig();
   }
 
   onNewBillFormSubmit() {
@@ -48,5 +48,16 @@ export class NewBillFormComponent implements OnInit {
     } else {
       return this.bills.length + 1;
     }
+  }
+
+  setBsConfig() {
+    this.bsConfiguration = Object.assign(
+      {
+        isAnimated: true,
+        adaptivePosition: true,
+        dateInputFormat: 'DD-MM-YYYY',
+        containerClass: 'theme-dark-blue'
+      }
+    );
   }
 }

@@ -3,3 +3,7 @@
 @import "../../node_modules/bootswatch/dist/darkly/bootswatch";
 @import "../../node_modules/bootswatch/dist/darkly/bootstrap.min.css";
 @import "variables";
+
+.bs-datepicker {
+  box-shadow: none;
+}

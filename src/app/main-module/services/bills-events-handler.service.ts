@@ -27,6 +27,7 @@ export class BillsEventsHandlerService {
 
   openNewBillForm() {
     this.newBillFormSource.next(true);
+    this.editBillFormSource.next(false);
   }
 
   closeNewBillForm() {
@@ -36,6 +37,7 @@ export class BillsEventsHandlerService {
   openEditBillForm(bill: Bill) {
     this.currentBillSource.next(bill);
     this.editBillFormSource.next(true);
+    this.newBillFormSource.next(false);
   }
 
   closeEditBillForm() {
