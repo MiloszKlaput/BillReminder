@@ -9,7 +9,7 @@
         <input [(ngModel)]="bill.companyName" type="text" class="form-control" id="companyName"
           placeholder="Enter company name..." name="companyName" #companyName="ngModel" required>
         <div *ngIf="companyName.invalid && (companyName.dirty || companyName.touched)" class="text-danger">
-          <div *ngIf="companyName.errors.required">
+          <div [hidden]="!companyName.errors.required">
             Company name is required.
           </div>
         </div>
@@ -19,7 +19,7 @@
         <input [(ngModel)]="bill.deadlineDate" type="text" class="form-control" id="deadline"
           placeholder="Enter deadline date..." name="deadline" bsDatepicker [bsConfig]="bsConfiguration" #deadlineDate="ngModel" required>
         <div *ngIf="deadlineDate.invalid && (deadlineDate.dirty || deadlineDate.touched)" class="text-danger">
-          <div *ngIf="deadlineDate.errors.required">
+          <div [hidden]="!deadlineDate.errors.required">
             Deadline date is required.
           </div>
         </div>
@@ -29,7 +29,7 @@
         <input [(ngModel)]="bill.amount" type="number" class="form-control" id="billAmount"
           placeholder="Enter bill amount..." min="0" name="billAmount" #amount="ngModel" required>
         <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="text-danger">
-          <div *ngIf="amount.errors.required">
+          <div [hidden]="!amount.errors.required">
             Amount is required.
           </div>
         </div>
@@ -37,7 +37,7 @@
       <button (click)="onEditBillFormSubmit()" type="submit" class="btn btn-success btn-block"
         [disabled]="!editBillForm.valid">Save</button>
       <button (click)="onDeleteBill()" class="btn btn-danger btn-block">Delete</button>
-      <button (click)="closeEditBillForm()" [disabled]="!editBillForm.valid" class="btn btn-secondary btn-block">Cancel</button>
+      <button (click)="closeEditBillForm()" class="btn btn-secondary btn-block">Cancel</button>
     </form>
   </div>
 </div>

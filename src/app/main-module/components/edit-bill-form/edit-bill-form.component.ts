@@ -21,7 +21,7 @@ export class EditBillFormComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
-    this.currentBillSubscription = this.billsEventsHandlerService.currentBill.subscribe(bill => (this.bill = bill));
+    this.currentBillSubscription = this.billsEventsHandlerService.currentBill$.subscribe(bill => (this.bill = bill));
     this.setBsConfig();
   }
 
@@ -31,8 +31,10 @@ export class EditBillFormComponent implements OnInit, OnDestroy {
   }
 
   onDeleteBill() {
-    this.billsService.deleteBill(this.bill);
-    this.closeEditBillForm();
+    if (confirm('Are you sure?')) {
+      this.billsService.deleteBill(this.bill);
+      this.closeEditBillForm();
+    }
   }
 
   closeEditBillForm() {

@@ -23,8 +23,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.billsService.getBills();
 
-    this.newBillFormSubscription = this.billsEventsHandlerService.isNewBillFormOpen.subscribe(state => (this.isNewBillFormOpen = state));
-    this.editBillFormSubscription = this.billsEventsHandlerService.isEditBillFormOpen.subscribe(state => (this.isEditBillFormOpen = state));
+    this.newBillFormSubscription = this.billsEventsHandlerService.isNewBillFormOpen$.subscribe(state => (this.isNewBillFormOpen = state));
+    this.editBillFormSubscription = this.billsEventsHandlerService.isEditBillFormOpen$.subscribe(state => (this.isEditBillFormOpen = state));
   }
 
   ngOnDestroy() {

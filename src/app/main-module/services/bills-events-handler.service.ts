@@ -17,11 +17,12 @@ export class BillsEventsHandlerService {
       isExpired: false,
     }
   );
-  currentBill = this.currentBillSource.asObservable();
+  currentBill$ = this.currentBillSource.asObservable();
+
   private newBillFormSource = new BehaviorSubject<boolean>(false);
-  isNewBillFormOpen = this.newBillFormSource.asObservable();
+  isNewBillFormOpen$ = this.newBillFormSource.asObservable();
   private editBillFormSource = new BehaviorSubject<boolean>(false);
-  isEditBillFormOpen = this.editBillFormSource.asObservable();
+  isEditBillFormOpen$ = this.editBillFormSource.asObservable();
 
   constructor() { }
 
