@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BillsEventsHandlerService } from '../../services/bills-events-handler.service';
 import { BillsService } from '../../services/bills.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
   isNewBillFormOpen: boolean;
   isEditBillFormOpen: boolean;
+
+  newBillFormSubscription: Subscription;
+  editBillFormSubscription: Subscription;
 
   constructor(
     private billsService: BillsService,
@@ -18,12 +22,13 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
     this.billsService.getBills();
-    this.billsEventsHandlerService.isNewBillFormOpen.subscribe(state => {
-      this.isNewBillFormOpen = state;
-    });
 
-    this.billsEventsHandlerService.isEditBillFormOpen.subscribe(state => {
-      this.isEditBillFormOpen = state;
-    });
+    this.newBillFormSubscription = this.billsEventsHandlerService.isNewBillFormOpen.subscribe(state => (this.isNewBillFormOpen = state));
+    this.editBillFormSubscription = this.billsEventsHandlerService.isEditBillFormOpen.subscribe(state => (this.isEditBillFormOpen = state));
+  }
+
+  ngOnDestroy() {
+    this.newBillFormSubscription.unsubscribe();
+    this.editBillFormSubscription.unsubscribe();
   }
 }

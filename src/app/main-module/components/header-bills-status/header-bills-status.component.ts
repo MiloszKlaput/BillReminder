@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Bill } from '../../model/bill.model';
 import { BillsService } from '../../services/bills.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header-bills-status',
   templateUrl: './header-bills-status.component.html',
   styleUrls: ['./header-bills-status.component.scss']
 })
-export class HeaderBillsStatusComponent implements OnInit {
+export class HeaderBillsStatusComponent implements OnInit, OnDestroy {
   bills: Bill[];
   billsStatus: number;
   message: string[] =
@@ -17,10 +18,18 @@ export class HeaderBillsStatusComponent implements OnInit {
     'You have unpaid bills!'
   ];
 
+  currentBillSubscription: Subscription;
+  billsStatusSubscription: Subscription;
+
   constructor(private billsService: BillsService) { }
 
   ngOnInit() {
-    this.billsService.currentBills$.subscribe(bills => (this.bills = bills));
-    this.billsService.billsStatus$.subscribe(billStatus => (this.billsStatus = billStatus));
+    this.currentBillSubscription = this.billsService.currentBills$.subscribe(bills => (this.bills = bills));
+    this.billsStatusSubscription = this.billsService.billsStatus$.subscribe(billStatus => (this.billsStatus = billStatus));
+  }
+
+  ngOnDestroy() {
+    this.currentBillSubscription.unsubscribe();
+    this.billsStatusSubscription.unsubscribe();
   }
 }

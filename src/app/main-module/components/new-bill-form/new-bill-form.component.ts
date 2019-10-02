@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Bill } from '../../model/bill.model';
 import { BillsService } from '../../services/bills.service';
 import { BillsEventsHandlerService } from '../../services/bills-events-handler.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-bill-form',
   templateUrl: './new-bill-form.component.html',
   styleUrls: ['./new-bill-form.component.scss']
 })
-export class NewBillFormComponent implements OnInit {
+export class NewBillFormComponent implements OnInit, OnDestroy {
 
   bill: Bill = {
     id: null,
@@ -21,6 +22,7 @@ export class NewBillFormComponent implements OnInit {
   };
   bills: Bill[];
   bsConfiguration: Partial<BsDatepickerConfig>;
+  currentBillSubscription: Subscription;
 
   constructor(
     private billsService: BillsService,
@@ -28,7 +30,7 @@ export class NewBillFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.billsService.currentBills$.subscribe(bills => (this.bills = bills));
+    this.currentBillSubscription = this.billsService.currentBills$.subscribe(bills => (this.bills = bills));
     this.setBsConfig();
   }
 
@@ -59,5 +61,9 @@ export class NewBillFormComponent implements OnInit {
         containerClass: 'theme-dark-blue'
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.currentBillSubscription.unsubscribe();
   }
 }
