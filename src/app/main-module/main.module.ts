@@ -10,6 +10,7 @@ import { AddNewBillComponent } from './components/add-new-bill/add-new-bill.comp
 import { EditBillFormComponent } from './components/edit-bill-form/edit-bill-form.component';
 import { HeaderBillsStatusComponent } from './components/header-bills-status/header-bills-status.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     CommonModule,
     FormsModule,
     FontAwesomeModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    ModalModule
   ],
   exports: [
     BoardComponent
