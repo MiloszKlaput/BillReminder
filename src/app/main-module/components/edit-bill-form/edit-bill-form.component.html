@@ -35,10 +35,21 @@
           </div>
         </div>
       </div>
-      <button (click)="onEditBillFormSubmit()" type="submit" class="btn btn-success btn-block"
-        [disabled]="!editBillForm.valid">Save</button>
-      <button (click)="onDeleteBill()" class="btn btn-danger btn-block">Delete</button>
-      <button (click)="closeEditBillForm()" class="btn btn-secondary btn-block">Cancel</button>
+      <div class="form-group">
+        <div class="d-flex align-items-center">
+          <label class="switch" for="isPaid">
+            <input type="checkbox" id="isPaid" [(ngModel)]="bill.isPaid" #isPaid="ngModel" name="isPaid"  />
+            <div class="slider round"></div>
+          </label>
+          <span class="ml-3 pb-2" [innerHTML]="bill.isPaid ? 'Paid' : 'Not paid'"></span>
+        </div>
+      </div>
+      <div class="my-2">
+        <button (click)="onEditBillFormSubmit()" type="submit" class="btn btn-success btn-block"
+          [disabled]="!editBillForm.valid">Save</button>
+        <button (click)="onDeleteBill()" class="btn btn-danger btn-block">Delete</button>
+        <button (click)="closeEditBillForm()" class="btn btn-secondary btn-block">Cancel</button>
+      </div>
     </form>
   </div>
 </div>

@@ -11,6 +11,7 @@ import { EditBillFormComponent } from './components/edit-bill-form/edit-bill-for
 import { HeaderBillsStatusComponent } from './components/header-bills-status/header-bills-status.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FormsModule,
     FontAwesomeModule,
     BsDatepickerModule,
-    ModalModule
+    ModalModule,
+    ButtonsModule
   ],
   exports: [
     BoardComponent
